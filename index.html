@@ -24,7 +24,7 @@
   .nightmare { margin:14px 0; padding:12px; background:#111; border:1px solid #333; cursor:pointer; }
   .nightmare .detail { display:none; margin-top:8px; color:#ccc; }
   .nightmare.open .detail { display:block; }
-  .coin { width:60px; height:60px; background:#ffcc66; border-radius:50%; display:inline-block; line-height:60px; text-align:center; color:#000; font-weight:bold; cursor:grab; }
+  .coin { width:60px; height:60px; background:#ffcc66; border-radius:50%; display:inline-block; line-height:60px; text-align:center; color:#000; font-weight:bold; cursor:grab; touch-action:none; }
   .slot { width:80px; height:40px; border:3px dashed #666; display:inline-block; margin-left:20px; vertical-align:middle; }
   .bg-float { position:fixed; opacity:0.15; font-size:0.8em; pointer-events:none; animation:float 12s linear infinite; }
   @keyframes float { from { transform:translateX(-100px); } to { transform:translateX(100vw); } }
@@ -44,7 +44,7 @@ ARE BELONG TO US
     <h1 style="color:#66ff66;">ALL YOUR BASE ARE BELONG TO US</h1>
     <p>PLAYER: TRAVIS BAUMANN</p>
     <div style="margin:30px 0;">
-      <div class="coin" id="coin" draggable="true">COIN</div>
+      <div class="coin" id="coin">COIN</div>
       <div class="slot" id="slot">SLOT</div>
     </div>
     <p id="boot-msg" style="color:#888;">Drag the coin into the slot</p>
@@ -159,11 +159,32 @@ function animateMath(){
   ['s1','s2','s3','s4','s5','s6'].forEach((id,i)=>{ setTimeout(()=>document.getElementById(id).classList.add('show'),i*700); });
 }
 
-// Coin drag
-const coinEl=document.getElementById('coin'), slotEl=document.getElementById('slot');
-coinEl.addEventListener('dragstart',e=>e.dataTransfer.setData('text','coin'));
-slotEl.addEventListener('dragover',e=>e.preventDefault());
-slotEl.addEventListener('drop',()=>{ coin(); document.getElementById('boot-msg').textContent='TRAILER FOR SALE OR RENT'; document.getElementById('start-btn').style.display='block'; coinEl.style.display='none'; });
+// Coin touch + mouse drag
+const coinEl = document.getElementById('coin');
+const slotEl = document.getElementById('slot');
+let dragging = false;
+
+function checkDrop(x, y) {
+  const rect = slotEl.getBoundingClientRect();
+  if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
+    coin();
+    document.getElementById('boot-msg').textContent = 'TRAILER FOR SALE OR RENT';
+    document.getElementById('start-btn').style.display = 'block';
+    coinEl.style.display = 'none';
+    dragging = false;
+  }
+}
+
+coinEl.addEventListener('touchstart', e => { dragging = true; e.preventDefault(); }, {passive:false});
+coinEl.addEventListener('touchmove', e => { if(dragging) e.preventDefault(); }, {passive:false});
+coinEl.addEventListener('touchend', e => {
+  if (!dragging) return;
+  const t = e.changedTouches[0];
+  checkDrop(t.clientX, t.clientY);
+});
+
+coinEl.addEventListener('mousedown', () => dragging = true);
+document.addEventListener('mouseup', e => { if(dragging) checkDrop(e.clientX, e.clientY); });
 
 // History trap
 history.pushState(null,null,location.href);
