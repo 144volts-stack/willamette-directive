@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WILLAMETTE ROOM FIELD DIRECTIVE</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0a0a0a; color:#e0e0e0; font-family:'Courier New',monospace; line-height:1.6; padding:20px; max-width:900px; margin:0 auto; }
+  h1 { color:#ff3333; text-align:center; font-size:1.8em; margin-bottom:10px; text-transform:uppercase; letter-spacing:2px; }
+  h2 { color:#ffcc00; margin:25px 0 10px; border-bottom:1px solid #333; padding-bottom:5px; }
+  .subtitle { text-align:center; color:#888; margin-bottom:30px; font-size:0.9em; }
+  .btn { display:block; width:100%; padding:18px; margin:12px 0; background:#1a1a1a; border:2px solid #333; color:#e0e0e0; font-family:inherit; font-size:1.05em; cursor:pointer; text-align:left; transition:all 0.15s; }
+  .btn:hover:not(.locked) { border-color:#ff3333; background:#2a1a1a; color:#fff; }
+  .btn.locked { opacity:0.4; cursor:not-allowed; }
+  .btn .icon { font-size:1.5em; margin-right:10px; }
+  .btn .sub { display:block; color:#888; font-size:0.85em; margin-top:5px; }
+  .page { display:none; }
+  .page.active { display:block; }
+  .back { color:#00ccff; cursor:pointer; margin-bottom:20px; display:inline-block; }
+  .back:hover { text-decoration:underline; }
+  .math { background:#111; border:1px solid #333; padding:15px; margin:15px 0; overflow-x:auto; }
+  .math table { width:100%; border-collapse:collapse; font-size:0.9em; }
+  .math td, .math th { padding:6px 10px; border:1px solid #333; text-align:left; }
+  .math th { color:#ffcc00; }
+  .quote { background:#111; border-left:4px solid #ff3333; padding:12px 15px; margin:15px 0; color:#ccc; font-style:italic; }
+  .error404 { text-align:center; padding:40px 20px; }
+  .error404 .code { font-size:6em; color:#ff3333; font-weight:bold; line-height:1; }
+  .error404 .msg { font-size:1.4em; color:#ffcc00; margin:15px 0; }
+  .lives { text-align:center; margin:15px 0; color:#ffcc00; font-size:1.1em; }
+  .nope { color:#ff3333; font-weight:bold; font-size:1.3em; text-align:center; margin:15px 0; animation:blink 0.8s infinite; }
+  @keyframes blink { 50% { opacity:0.3; } }
+  .boot { text-align:center; padding:40px 20px; }
+  .owl-img { width:120px; height:120px; border-radius:50%; border:4px solid #ffcc00; margin:10px auto; display:block; object-fit:cover; }
+  .nightmare { margin:15px 0; padding:10px; background:#111; border:1px solid #333; }
+  .nightmare img { max-width:100%; height:auto; border-radius:4px; margin-bottom:8px; }
+  .final { text-align:center; padding:50px 20px; }
+  .final h1 { font-size:2.5em; }
+  .sources { margin-top:40px; padding-top:20px; border-top:1px solid #333; font-size:0.85em; color:#666; }
+  .sources a { color:#00ccff; }
+  ul { margin:10px 0 10px 25px; }
+  li { margin:5px 0; }
+  .terminal { background:#000; color:#0f0; padding:15px; font-family:monospace; white-space:pre-wrap; margin:15px 0; border:1px solid #0f0; }
+</style>
+</head>
+<body>
+
+<div id="page-boot" class="page active">
+  <div class="boot">
+    <pre style="color:#00ff00; font-size:0.65em; line-height:1.1; margin-bottom:15px;">
+ █████╗ ██╗     ██╗          ██╗   ██╗ ██████╗ ██╗   ██╗██████╗ 
+██╔══██╗██║     ██║          ╚██╗ ██╔╝██╔═══██╗██║   ██║██╔══██╗
+███████║██║     ██║           ╚████╔╝ ██║   ██║██║   ██║██████╔╝
+██╔══██║██║     ██║            ╚██╔╝  ██║   ██║██║   ██║██╔══██╗
+██║  ██║███████╗███████╗       ██║   ╚██████╔╝╚██████╔╝██║  ██║
+╚═╝  ╚═╝╚══════╝╚══════╝       ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝
+    </pre>
+    <h1 style="color:#00ff00; text-shadow:0 0 15px #00ff00;">ALL YOUR BASE ARE BELONG TO US</h1>
+    <p style="margin-top:10px; color:#00ff00;">PLAYER: TRAVIS BAUMANN</p>
+    <p style="margin-top:15px; color:#888;">INSERT COIN TO BEGIN</p>
+    <button class="btn" style="max-width:300px; margin:25px auto;" onclick="go('landing'); playBoot();">PRESS START</button>
+  </div>
+</div>
+
+<div id="page-landing" class="page">
+  <h1>WILLAMETTE ROOM</h1>
+  <div class="subtitle">FIELD DIRECTIVE // TRAVIS BAUMANN // INGENIUS SOLUTIONS<br>CHOOSE YOUR OWN ADVENTURE</div>
+  <div class="lives">LIVES REMAINING: <span id="lives">4</span> / 4</div>
+  <p style="text-align:center; margin-bottom:25px; color:#aaa;">The CM20 has been dying every morning. Two switches. Same failure. The cable is not the variable.<br>Paths unlock only after you survive the previous death.</p>
+  <button class="btn" onclick="tryPath('ladder'); playClick();"><span class="icon">🪜</span> GRAB THE LADDER<span class="sub">Replace the CCA. This is the "fix."</span></button>
+  <button class="btn locked" id="btn-injector" onclick="tryPath('injector'); playClick();"><span class="icon">🔌</span> ADD A POE INJECTOR<span class="sub">Power the CM20 directly into the VCH port. Option B.</span></button>
+  <button class="btn locked" id="btn-switch" onclick="tryPath('switch'); playClick();"><span class="icon">🖧</span> SWITCH BACKPLANE<span class="sub">Mic, tablet, and bar all on the Netgear. Direct uplink.</span></button>
+  <button class="btn locked" id="btn-statics" onclick="tryPath('statics'); playClick();"><span class="icon">📌</span> STATIC IPS + KILL FEATURES<span class="sub">Everything static in the Comcast box. EEE and IGMP dead.</span></button>
+  <div class="sources">
+    <strong>CITATIONS YOU DECLINED TO READ:</strong><br>
+    CM20 Datasheet: <a href="https://support.yealink.com/docs/cm20/yealink-ceiling-microphone-cm20-datasheet/fbc6ce910e774b93b9924a8bb871381a" target="_blank">support.yealink.com/docs/cm20</a><br>
+    CTP18 Datasheet: <a href="https://support.yealink.com/docs/ctp18/yealink-ctp18-datasheet/c0bff47e13ac4168aeca6030eab3faae" target="_blank">support.yealink.com/docs/ctp18</a><br>
+    A30 Datasheet: <a href="https://support.yealink.com/docs/a30/yealink-meetingbar-a30-datasheet/08fbead4ac6044c39d97941a755deabe" target="_blank">support.yealink.com/docs/a30</a><br>
+    TIA-568 / NEC: solid copper required for commercial Category cabling
+  </div>
+</div>
+
+<div id="page-ladder" class="page">
+  <span class="back" onclick="go('landing'); playClick();">← BACK TO LANDING</span>
+  <div class="nope">NO THAT'S NOT HOW IT WORKS</div>
+  <div class="error404">
+    <div class="code">404</div>
+    <div class="msg">ID10T ERROR</div>
+    <div style="color:#888;">PAGE NOT FOUND: LADDER DOES NOT LEAD TO A FIX</div>
+    <div style="color:#666; margin-top:10px;">REFER TO: BACKEND RTFM</div>
+  </div>
+  <h2>VOLTAGE DROP FOR BEGINNERS</h2>
+  <img class="owl-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Phidippus_audax_male.jpg/440px-Phidippus_audax_male.jpg" alt="Mr. Hoot" onerror="this.style.display='none'">
+  <div class="owl">🦉</div>
+  <p style="text-align:center; color:#ffcc00;">MR. HOOT'S AFTER-SCHOOL SPECIAL</p>
+  <p>Today we're learning why Travis wants you to climb a ladder for a wire that drops less than a volt. Common Core style. Show your work.</p>
+  <div class="math">
+    <table>
+      <tr><th>Step</th><th>What we do</th><th>Result</th></tr>
+      <tr><td>1</td><td>Run length (out and back)</td><td>30 ft × 2 = 60 ft</td></tr>
+      <tr><td>2</td><td>CM20 typical draw</td><td>5.7 W / 48 V = 0.119 A</td></tr>
+      <tr><td>3</td><td>24 AWG CCA resistance</td><td>~0.084 Ω/ft × 60 ft = 5.04 Ω</td></tr>
+      <tr><td>4</td><td>Voltage drop at typical</td><td>5.04 Ω × 0.119 A = 0.60 V</td></tr>
+      <tr><td>5</td><td>At peak (9 W)</td><td>~0.95 V</td></tr>
+      <tr><td>6</td><td>802.3af brownout floor</td><td>37 V (11 V of headroom from 48 V)</td></tr>
+    </table>
+  </div>
+  <p>The mic still sees ~46.8 V at peak. You'd need a run near <strong>328 feet</strong> (100 meters) before resistance alone starts to matter, and even then the problem would be time-of-flight packet collisions, not a brownout.</p>
+  <h2>328 FEET / 100 METERS</h2>
+  <p>That's the Ethernet spec limit for a single segment. Past that, round-trip time exceeds what the protocol allows — frames collide and you get timeouts. It's not that the signal dies. It's that the timing math breaks. With CCA you'd probably have a bad day before you even hit 328 feet because resistance starts choking real current. A 90 W PTZ camera through 328 feet of 24 AWG CCA would see over 60 V of drop from a 48 V source. That's not a brownout. That's a funeral. The GS305GP's total PoE budget is 63 W. That camera wouldn't even power up.</p>
+  <h2>WHAT A BROWNOUT ACTUALLY IS</h2>
+  <p>Voltage sags below spec but doesn't hit zero. The device doesn't shut off cleanly — it gets confused. It reboots randomly, drops packets, forgets its IP, starts acting possessed. That's what the mic does every morning. It doesn't die. It gets stupid. A resistive fault doesn't have a clock. If CCA were starving the mic, it would die mid-sentence during a meeting. It dies at 3 AM when nobody's in the building. That's not a wire. That's a discovery socket going cold.</p>
+  <p style="margin-top:20px; color:#888;">CCA is also not legal for commercial Category cabling (TIA-568 / NEC). It doesn't meet impedance, resistance, or fire-rating. You've only ever pulled plenum from real distributors. Travis pulled it off Amazon.</p>
+</div>
+
+<div id="page-injector" class="page">
+  <span class="back" onclick="go('landing'); playClick();">← BACK TO LANDING</span>
+  <h1>POE INJECTOR PATH</h1>
+  <h2>YEALINK'S OWN MANUAL SAYS THIS WORKS</h2>
+  <div class="quote">CM20 install guide: power the microphone with a standard 802.3af PoE injector. Any compliant injector. Power goes to the mic. Data passes straight through to the A30's VCH port. No switch required.</div>
+  <p>This is Option B. The first thing that came out of my mouth when I looked at the setup. You said "that's not how it works." Yealink's documentation says it is.</p>
+  <h2>THE VCH PORT IS NOT AIR-GAPPED</h2>
+  <div class="quote">CTP18 user guide (firmware 155.321.0.15+): connect the CTP18 directly to the MeetingBar's VCH port with an Ethernet cable and pairing completes automatically. If that port were air-gapped, that sentence would not exist.</div>
+  <p>A30 datasheet: two RJ-45 ports — one Internet, one Yealink extension (VCH). Quick start guide: "the functions of the VC Hub/Phone port and the Internet port are different, pay attention to the connection method." Different functions. A bridge. Not isolation. Not NAT. Not DHCP. Nothing in that port generates an address.</p>
+</div>
+
+<div id="page-switch" class="page">
+  <span class="back" onclick="go('landing'); playClick();">← BACK TO LANDING</span>
+  <h1>SWITCH BACKPLANE PATH</h1>
+  <h2>TWO SWITCHES, SAME FAILURE</h2>
+  <p>Original GS305P (unmanaged) powered the CM20 and the system came up. Then it died the next morning after idle. You called it defective. I swapped in the GS305GP. Out of the box the mic was invisible. I logged into it from my iPad over the network and killed EEE, IGMP snooping, QoS, storm control, and every power-saving feature. After that it behaved exactly like the unmanaged switch: works during use, dead every morning. Two different switches. Identical failure. The cable was the only constant and the failure didn't move. Power saving defaulting to off contributed nothing. IGMP off is what brought the mic back.</p>
+  <h2>AV NIGHTMARE FIELD GUIDE</h2>
+  <div class="nightmare">
+    <strong>The VLAN with no uplink</strong>
+    <p>He built a VLAN that couldn't reach the router and spent three days troubleshooting a problem he created in ten minutes. Same disease as an island switch with no uplink. Clean looking. Completely broken.</p>
+  </div>
+  <div class="nightmare">
+    <strong>Cat6 terminated with a hammer</strong>
+    <p>Crimps that looked like modern art. Link light came on. Nothing talked. "It worked on my tester."</p>
+  </div>
+  <div class="nightmare">
+    <strong>Projector pointed at the ceiling tile</strong>
+    <p>Demo day. Lamp on. Tile starts smoking. Client asks if that's normal.</p>
+  </div>
+  <div class="nightmare">
+    <strong>Extension cords stapled to drywall</strong>
+    <p>No power in the ceiling. Every device gets a black cord running up the wall like a crime scene.</p>
+  </div>
+  <p>That first one is the same failure mode with different clothes. Isolated switch, no uplink, calls it a design.</p>
+</div>
+
+<div id="page-statics" class="page">
+  <span class="back" onclick="go('landing'); playClick();">← BACK TO LANDING</span>
+  <h1>STATICS + COMCAST</h1>
+  <p>Every IP on that floor comes from 10.0.0.1 (or 10.0.128.1). I scanned it from a phone and saw cell phones, laptops, the other Yealink A20, everything. Open network. Three gateway models in Portland: XB6 (Arris TG3482G or Technicolor CGM4140COM), XB7 (Technicolor CGM4331COM or Arris TG4482A), XB8 (CommScope CGM4981COM). All NAT. All DHCP. All 10.0.0.0/24. Comcast gateways eat mDNS and multicast after idle. The CM20 is an AES67 endpoint that needs continuous local discovery. When its only path is through the A30's VCH bridge and then out through Comcast, idle-state filtering kills the discovery.</p>
+  <h2>PERMANENT FIX</h2>
+  <ul>
+    <li>Land the building uplink on the switch alongside the microphone so continuous router traffic keeps MAC tables warm</li>
+    <li>Static IP reservations in the Comcast box for every piece of AV gear</li>
+    <li>Or the $10 PoE injector directly into the VCH port — the thing I suggested on day one</li>
+    <li>On future builds: dedicated managed router (UniFi Dream Machine or similar) on its own subnet with SIM failover so Comcast reboots never touch the room</li>
+  </ul>
+  <h2>THE RÉSUMÉ YOU DISMISSED</h2>
+  <p>26+ years. All 49 states except Hawaii. SEMA (Subaru North America Forester, 2003 — custom pod, DC-to-DC clean power so the onboard computer didn't yeet its hard drive when the headlights or AC kicked on. Boston Acoustics sponsored it). CES. Part numbers named after me at REI. Thousands of school buses across the country: stop-arm camera systems, child checkmate systems (Alaska, Oregon, half of Washington for First Student), Geotab installs in Nashville (~900 buses), event-triggered tagging (yellows/reds), Cradlepoint, Cisco, 12V-to-48V PoE injectors I sourced myself. Qualcomm-certified telematics. Whole-home automation on multi-million-dollar houses in Palm Springs and Santa Barbara in the early 2000s. Hundred-hour Pronto builds. Crestron, Control4, RTI. Franchise fitness studio packages at $25k each. Six-story houses with elevators and wine cellars that owners show off. Recording studios, full networks, camera systems, WAPs, secure terminals, VPNs. Expediter vans with compressors, bigger alternators, more batteries. Hybrid systems. Full PGE three-phase extensions. Takeoffs and submittals. Custom fiberglass enclosures. I've never made a business card. The work finds me.</p>
+  <p style="margin-top:20px;">14.4volts@gmail.com<br>(503) 502-4048<br>Scott LaRoche<br><span style="color:#888;">(If you're questioning the voltage drop math from a guy whose email is 14.4 volts, you're already lost.)</span></p>
+</div>
+
+<div id="page-zookeeper" class="page">
+  <span class="back" onclick="go('landing'); playClick();">← BACK TO LANDING</span>
+  <h1>ZOOKEEPER</h1>
+  <div class="terminal">Running simulation...
+2000 RPM... 10 min... nominal.
+10000 RPM... nominal.
+Full load... nominal.
+All tests passed.
+Rechecking assumptions...
+Error: reality does not match training data.
+Attempting to rewrite reality... failed.
+Attempting again... failed.
+Wheeling to death.
+Maybe I should have listened.
+
+     .-""""""-.
+   .'          '.
+  /   O      O   \
+ :                :
+ |                |
+ : ',          ,' :
+  \  '-......-'  /
+   '.          .'
+     '-......-'
+   (motor still spinning)</div>
+  <p>Zookeeper's training said the model shouldn't work, so it kept rewriting the design to fit its priors instead of trusting the simulation. Same disease. Travis's training said the cable's the problem, so he keeps sending people up ladders instead of trusting the switch test. Both would rather die than update on evidence that contradicts what they already believe.</p>
+</div>
+
+<div id="page-final" class="page">
+  <span class="back" onclick="go('landing'); playClick();">← BACK TO LANDING</span>
+  <div class="final">
+    <h1>YOU DIED OF DYSENTERY</h1>
+    <p style="margin:20px 0; font-size:1.3em; color:#ffcc00;">YOUR NAME IS TRAVIS</p>
+    <p style="margin:20px 0;">GAME OVER</p>
+    <p>INSERT COIN TO RESTORE FAITH IN YOUR OWN PRODUCT DOCUMENTATION</p>
+    <div style="margin-top:40px; text-align:left; max-width:600px; margin-left:auto; margin-right:auto;">
+      <div class="quote">Yealink Support Bot: Have you tried reading the CTP18 user guide, section 4.2?</div>
+      <div class="quote">Travis: ...</div>
+    </div>
+    <p style="margin-top:30px; color:#666;">This is what I do when I'm not fixing your rooms.</p>
+  </div>
+</div>
+
+<script>
+let lives = 4;
+let unlocked = { ladder: true, injector: false, switch: false, statics: false };
+
+let audioCtx;
+function initAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+function playTone(freq, duration, type = 'square', vol = 0.08) {
+  initAudio();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+}
+function playClick() { playTone(800, 0.05, 'square', 0.06); }
+function playScreech() {
+  initAudio();
+  for (let i = 0; i < 10; i++) {
+    setTimeout(() => playTone(600 + Math.random()*1400, 0.07, 'sawtooth', 0.07), i * 50);
+  }
+}
+function playError() {
+  playTone(180, 0.12, 'square', 0.12);
+  setTimeout(() => playTone(140, 0.25, 'square', 0.09), 140);
+}
+function playBoot() {
+  playTone(440, 0.08);
+  setTimeout(() => playTone(660, 0.1), 100);
+  setTimeout(() => playTone(880, 0.12), 200);
+}
+function playSuccess() {
+  playTone(523, 0.08);
+  setTimeout(() => playTone(659, 0.08), 90);
+  setTimeout(() => playTone(784, 0.12), 180);
+}
+
+function go(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function tryPath(path) {
+  if (!unlocked[path]) {
+    alert("Survive the previous death first. Paths unlock in order.");
+    playError();
+    return;
+  }
+  if (lives > 0 && path !== 'statics') {
+    lives--;
+    document.getElementById('lives').textContent = lives;
+  }
+  if (path === 'ladder') {
+    unlocked.injector = true;
+    playScreech();
+  } else if (path === 'statics') {
+    playSuccess();
+  } else {
+    playClick();
+  }
+  if (path === 'injector') unlocked.switch = true;
+  if (path === 'switch') unlocked.statics = true;
+  updateButtons();
+  go(path);
+  if (lives <= 0) {
+    setTimeout(() => { go('final'); playError(); }, 600);
+  }
+}
+
+function updateButtons() {
+  document.getElementById('btn-injector').classList.toggle('locked', !unlocked.injector);
+  document.getElementById('btn-switch').classList.toggle('locked', !unlocked.switch);
+  document.getElementById('btn-statics').classList.toggle('locked', !unlocked.statics);
+}
+</script>
+</body>
+</html>
